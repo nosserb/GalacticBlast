@@ -1,8 +1,8 @@
 // app/api/badge/route.ts
 
-import { ImageResponse } from '@vercel/og'; // Assurez-vous que @vercel/og est bien dans package.json
+import { ImageResponse } from '@vercel/og'; 
 
-export const runtime = 'edge'; // Pour une exécution rapide sur Vercel
+export const runtime = 'edge'; 
 
 export async function GET(request: Request) {
   try {
@@ -13,11 +13,10 @@ export async function GET(request: Request) {
     const color = searchParams.get('color') || '#00BFFF';
     const bgColor = searchParams.get('bgColor') || '#1F2937';
 
-    // Rendu de l'Image (Le JSX DOIT ÊTRE ENFERMÉ DANS DES PARENTHÈSES)
+    // Rendu de l'Image (Utilisation d'une police SANS SERRIT standard)
     return new ImageResponse(
       (
-        // C'est cette parenthèse ouverte qui était probablement manquante ou mal placée
-        <div 
+        <div
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -29,7 +28,7 @@ export async function GET(request: Request) {
             padding: '0 20px',
             borderRadius: '5px',
             border: `3px solid ${color}`,
-            fontFamily: 'sans-serif', // Police de secours
+            fontFamily: 'sans-serif', 
           }}
         >
           <p
@@ -43,7 +42,7 @@ export async function GET(request: Request) {
             {decodeURIComponent(text)}
           </p>
         </div>
-      ), // Et la parenthèse fermée ici
+      ),
       {
         width: 400,
         height: 60,
