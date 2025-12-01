@@ -13,10 +13,11 @@ export async function GET(request: Request) {
     const color = searchParams.get('color') || '#00BFFF';
     const bgColor = searchParams.get('bgColor') || '#1F2937';
 
-    // Rendu de l'Image (Utilisation d'une police SANS SERRIT standard)
+    // Rendu de l'Image (Le JSX DOIT ÊTRE ENFERMÉ DANS DES PARENTHÈSES)
     return new ImageResponse(
       (
-        <div
+        // C'est cette parenthèse ouverte qui était probablement manquante ou mal placée
+        <div 
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -42,16 +43,14 @@ export async function GET(request: Request) {
             {decodeURIComponent(text)}
           </p>
         </div>
-      ),
+      ), // Et la parenthèse fermée ici
       {
         width: 400,
         height: 60,
-        // Pas de tableau 'fonts' nécessaire ici, ce qui évite le crash
       },
     );
   } catch (e: any) {
     console.error('Erreur interne de l’API:', e.message);
-    // Important : renvoie un code d'état d'erreur pour indiquer le crash
     return new Response(`API Crash: ${e.message}`, { status: 500 });
   }
 }
