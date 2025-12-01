@@ -1,21 +1,19 @@
 // app/api/badge/route.ts
 
-import { ImageResponse } from '@vercel/og';
-// On retire l'import de FONT_URL et le fetch de fontData.
+import { ImageResponse } from '@vercel/og'; // Assurez-vous que @vercel/og est bien dans package.json
 
-// Reste en Edge pour l'efficacité, car c'est une fonctionnalité clé de Vercel/Next.js.
-export const runtime = 'edge';
+export const runtime = 'edge'; // Pour une exécution rapide sur Vercel
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
 
-    // --- 1. PARAMÈTRES ET VALEURS PAR DÉFAUT ---
-    const text = searchParams.get('text') || 'Titre Dynamique';
-    const color = searchParams.get('color') || '#00BFFF'; // Couleur du texte
-    const bgColor = searchParams.get('bgColor') || '#1F2937'; // Couleur de fond (Gris foncé)
+    // Récupération des paramètres
+    const text = searchParams.get('text') || 'Dynamic Title';
+    const color = searchParams.get('color') || '#00BFFF';
+    const bgColor = searchParams.get('bgColor') || '#1F2937';
 
-    // --- 2. RENDU DE L'IMAGE (Utilisation de police par défaut) ---
+    // Rendu de l'Image (Utilisation d'une police SANS SERRIT standard)
     return new ImageResponse(
       (
         <div
@@ -23,25 +21,22 @@ export async function GET(request: Request) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            // On définit une taille standard pour les badges GitHub
-            width: '100%', 
+            width: '100%',
             height: '100%',
             backgroundColor: bgColor,
             color: color,
-            padding: '0 25px',
+            padding: '0 20px',
             borderRadius: '5px',
             border: `3px solid ${color}`,
+            fontFamily: 'sans-serif', // Police de secours
           }}
         >
           <p
             style={{
-              fontSize: 32, // Taille optimisée pour le format badge
-              // Utilisation d'une police SANS SERRIT par défaut (fiable)
-              fontFamily: 'sans-serif', 
+              fontSize: 36, 
               fontWeight: 700,
               textTransform: 'uppercase',
               whiteSpace: 'nowrap',
-              letterSpacing: '0.1em'
             }}
           >
             {decodeURIComponent(text)}
@@ -49,16 +44,14 @@ export async function GET(request: Request) {
         </div>
       ),
       {
-        width: 400, // Largeur réduite pour un badge classique
-        height: 60, // Hauteur réduite
-        // On retire le tableau 'fonts'
+        width: 400,
+        height: 60,
+        // Pas de tableau 'fonts' nécessaire ici, ce qui évite le crash
       },
     );
   } catch (e: any) {
-    console.error('Erreur de génération de badge (simplifié):', e.message);
-    // Renvoie une erreur 500 avec le message de l'erreur pour le débogage
-    return new Response(`Erreur: ${e.message}`, {
-      status: 500,
-    });
+    console.error('Erreur interne de l’API:', e.message);
+    // Important : renvoie un code d'état d'erreur pour indiquer le crash
+    return new Response(`API Crash: ${e.message}`, { status: 500 });
   }
 }
