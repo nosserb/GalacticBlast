@@ -1,55 +1,34 @@
 // app/api/badge/route.ts
 
-import { ImageResponse } from '@vercel/og'; 
+// Plus besoin d'importer ImageResponse ou React !
 
-export const runtime = 'edge'; 
+export const runtime = 'edge';
 
 export async function GET(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url);
+    try {
+        const { searchParams } = new URL(request.url);
 
-    // Récupération des paramètres
-    const text = searchParams.get('text') || 'Dynamic Title';
-    const color = searchParams.get('color') || '#00BFFF';
-    const bgColor = searchParams.get('bgColor') || '#1F2937';
+        const text = searchParams.get('text') || 'Titre Dynamique';
+        const colorHex = searchParams.get('color') || '007ec6'; // Bleu par défaut (sans #)
+        const bgColorHex = searchParams.get('bgColor') || '555555'; // Gris foncé par défaut (sans #)
 
-    // Rendu de l'Image (Le JSX le plus simple possible)
-    return new ImageResponse(
-      (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            height: '100%',
-            backgroundColor: bgColor,
-            color: color,
-            padding: '0 20px',
-            borderRadius: '5px',
-            border: `3px solid ${color}`,
-            fontFamily: 'sans-serif', 
-          }}
-        >
-          <p
-            style={{
-              fontSize: 36, 
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {decodeURIComponent(text)}
-          </p>
-        </div>
-      ),
-      {
-        width: 400,
-        height: 60,
-      },
-    );
-  } catch (e: any) {
-    console.error('Erreur interne de l’API:', e.message);
-    return new Response(`API Crash: ${e.message}`, { status: 500 });
-  }
+        const safeText = encodeURIComponent(text.replace(/-/g, '--'));
+
+        // Création du lien vers un service de badge SVG standard
+        // (Exemple : Shields.io, qui est une solution très fiable)
+        const shieldsUrl = `https://img.shields.io/badge/Status-${safeText}-${colorHex}?style=flat&colorA=${bgColorHex}`;
+
+        // Redirection vers le badge Shields.io
+        return new Response(null, {
+            status: 302, // Code de redirection
+            headers: {
+                Location: shieldsUrl,
+                'Cache-Control': 'public, max-age=86400' // Cache pour un jour
+            }
+        });
+
+    } catch (e: any) {
+        console.error("Erreur dans l'API de redirection :", e.message);
+        return new Response("Erreur dans l'API de badge.", { status: 500 });
+    }
 }
