@@ -3,9 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Adding HIGHSPEED font declaration */
+/* Ajout de la déclaration de police HIGHSPEED */
 @font-face {
   font-family: "HIGHSPEED";
+  /* Le chemin commence par / pour accéder au dossier public */
   src: url("/fonts/HIGHSPEED.TTF") format("truetype");
   font-weight: normal;
   font-style: normal;
@@ -130,9 +131,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* Adding glowing text effect for SVG titles */
-.glowing-text {
-  filter: drop-shadow(0 0 10px rgba(173, 216, 230, 0.7)) drop-shadow(0 0 20px rgba(173, 216, 230, 0.5));
 }
