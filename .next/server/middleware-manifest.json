@@ -1,0 +1,54 @@
+{
+  "version": 3,
+  "middleware": {},
+  "functions": {
+    "/api/image/route": {
+      "files": [
+        "server/server-reference-manifest.js",
+        "server/app/api/image/route_client-reference-manifest.js",
+        "server/middleware-build-manifest.js",
+        "server/middleware-react-loadable-manifest.js",
+        "server/next-font-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "server/edge-runtime-webpack.js",
+        "server/app/api/image/route.js"
+      ],
+      "name": "app/api/image/route",
+      "page": "/api/image/route",
+      "matchers": [
+        {
+          "regexp": "^/api/image$",
+          "originalSource": "/api/image"
+        }
+      ],
+      "wasm": [
+        {
+          "name": "wasm_77d9faebf7af9e421806970ce10a58e9d83116d7",
+          "filePath": "server/edge-chunks/wasm_77d9faebf7af9e421806970ce10a58e9d83116d7.wasm"
+        },
+        {
+          "name": "wasm_ef4866ecae192fd87727067cf2c0c0cf9fb8b020",
+          "filePath": "server/edge-chunks/wasm_ef4866ecae192fd87727067cf2c0c0cf9fb8b020.wasm"
+        }
+      ],
+      "assets": [
+        {
+          "name": "HIGHSPEED.607221071ced832f.TTF",
+          "filePath": "server/edge-chunks/asset_HIGHSPEED.607221071ced832f.TTF"
+        },
+        {
+          "name": "noto-sans-v27-latin-regular.5dda3fca77107598.ttf",
+          "filePath": "server/edge-chunks/asset_noto-sans-v27-latin-regular.5dda3fca77107598.ttf"
+        }
+      ],
+      "env": {
+        "__NEXT_BUILD_ID": "development",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "VCdGOCQ1DBAwoemBvm4xmdhfpobids0wtCkPN4/Scqo=",
+        "__NEXT_PREVIEW_MODE_ID": "c07ce079f11e09acac0c4cfb2cf94115",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "caf1d77a74fe1535025e84fbbced813e0b0ddf6de013903cde29548c0f87e7dc",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "d40bfc4e092f1b1f6aa24906fb0d987b7683935911eaecbe9459dbe71619847d"
+      }
+    }
+  },
+  "sortedMiddleware": []
+}
