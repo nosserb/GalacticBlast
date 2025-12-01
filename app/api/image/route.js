@@ -25,9 +25,5 @@ export async function GET(req) {
         {texte}
       </div>
     ),
-    {
-      width: 800,
-      height: 200,
-    }
+    { width: 800, height: 200 }
   );
-}
