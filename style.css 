@@ -2,8 +2,8 @@
    Déclaration de la police locale
    ============================== */
 @font-face {
-  font-family: 'NeonPhantom';
-  src: url('./fonts/NeonPhantom.ttf') format('truetype');
+  font-family: 'HIGHSPEED';
+  src: url('./fonts/HIGHSPEED.TTF') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -18,13 +18,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0f0c29; /* Fond sombre */
-  font-family: 'NeonPhantom', Arial, sans-serif;
+  background: #0f0c29; /* Fond sombre autour */
+  font-family: 'HIGHSPEED', Arial, sans-serif;
 }
 
-/* ==============================
-   Styles pour le SVG
-   ============================== */
 svg {
   width: 80%;
   max-width: 800px;
@@ -33,17 +30,18 @@ svg {
 }
 
 svg rect {
-  fill: url(#gradient);  /* Dégradé bleu/violet */
-  rx: 20;                /* Coins arrondis */
+  fill: #0f0c29; /* Fond sombre du rectangle */
+  rx: 20;        /* Coins arrondis */
   ry: 20;
 }
 
 svg text {
-  font-family: 'NeonPhantom', Arial, sans-serif;
-  font-size: 48px;
-  fill: white;
+  font-family: 'HIGHSPEED', Arial, sans-serif;
+  font-size: 60px;
   text-anchor: middle;
   dominant-baseline: middle;
-  letter-spacing: 1.5px;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  fill: rgba(173, 216, 230, 0.8); /* Bleu clair légèrement transparent */
+  filter: drop-shadow(0 0 10px rgba(173,216,230,0.7))
+          drop-shadow(0 0 20px rgba(173,216,230,0.5)); /* Glow lumineux */
+  letter-spacing: 1px;
 }

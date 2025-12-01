@@ -2,27 +2,19 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>GalacticBlast</title>
-  <style>
-    body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; }
-    svg text { font-family: Arial, sans-serif; font-weight: bold; }
-  </style>
+  <title>Titre Lumineux</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<svg id="titleSvg" width="600" height="100">
-  <rect width="100%" height="100%" fill="#1e3c72"/>
-  <text x="50%" y="50%" font-size="40" fill="white" text-anchor="middle" dominant-baseline="middle">
-    TITRE
-  </text>
+<svg id="titleSvg" width="800" height="150">
+  <rect width="100%" height="100%"/>
+  <text x="50%" y="50%">TITRE_ICI</text>
 </svg>
 
 <script>
-  // Récupérer le paramètre "text" de l'URL
   const params = new URLSearchParams(window.location.search);
-  const text = params.get('text') || "Mon Titre";
-  
-  // Remplacer le texte dans le SVG
+  const text = params.get('text') || "MON TITRE";
   document.querySelector('#titleSvg text').textContent = text;
 </script>
 
