@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     const color = searchParams.get('color') || '#00BFFF';
     const bgColor = searchParams.get('bgColor') || '#1F2937';
 
-    // Rendu de l'Image (Utilisation d'une police SANS SERRIT standard)
+    // Rendu de l'Image (Le JSX le plus simple possible)
     return new ImageResponse(
       (
         <div
