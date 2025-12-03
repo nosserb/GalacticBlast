@@ -1,8 +1,8 @@
-<p align="center">
-  <a href="https://ibb.co/20swhkhL">
-    <img src="https://i.ibb.co/20swhkhL/2f70d3760058.png" alt="Galactic Blast Logo" width="400">
+<div align="center" style="margin-bottom: 40px;">
+  <a href="https://i.ibb.co/20swhkhL/2f70d3760058.png">
+    <img src="https://i.ibb.co/20swhkhL/2f70d3760058.png" alt="Galactic Blast Logo" style="max-width: 500px; width: 100%; height: auto; object-fit: contain;">
   </a>
-</p>
+</div>
 
 ![Static Badge](https://img.shields.io/badge/GITHUB-nosserb-brightgreen?logo=Github)
 
@@ -18,7 +18,7 @@
 ">
   
 <p align="center">
-<strong>GALACTIC BLAST</strong> est un générateur de titre haute qualité.
+<strong>GALACTIC BLAST</strong> est un générateur de haute qualité.
 Saisissez du texte, choisissez votre police, couleur et taille,
 et l'application génère automatiquement une image premium.
 L'image est téléchargée sur ImgBB et un lien public est généré.
