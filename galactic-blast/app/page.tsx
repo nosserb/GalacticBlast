@@ -1,102 +1,104 @@
+"use client";
+
+import { useState, useRef } from "react";
 import Image from "next/image";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [texte, setTexte] = useState("");
+  const [generatedUrl, setGeneratedUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.ctrlKey && e.key === "Enter") {
+      e.preventDefault();
+      await generateImage();
+    }
+  };
+
+  const generateImage = async () => {
+    if (!texte.trim()) return;
+
+    setIsLoading(true);
+    try {
+      const encodedText = encodeURIComponent(texte);
+      const imageUrl = `/api/image?texte=${encodedText}`;
+      setGeneratedUrl(imageUrl);
+    } catch (error) {
+      console.error("Erreur lors de la génération :", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const copyToClipboard = () => {
+    if (generatedUrl) {
+      navigator.clipboard.writeText(generatedUrl);
+      alert("Lien copié !");
+    }
+  };
+
+  return (
+    <div className="font-sans grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 gap-8 bg-gradient-to-br from-slate-900 to-slate-800">
+      <header className="text-center">
+        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+          Galactic Blast
+        </h1>
+        <p className="text-gray-300 mt-2">Générez des images avec texte personnalisé</p>
+      </header>
+
+      <main className="flex flex-col gap-6 w-full max-w-2xl">
+        <div className="bg-slate-700 p-6 rounded-lg shadow-lg">
+          <label className="block text-sm font-medium text-gray-200 mb-2">
+            Entrez votre texte :
+          </label>
+          <textarea
+            ref={textareaRef}
+            value={texte}
+            onChange={(e) => setTexte(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Tapez votre texte ici... (Ctrl+Entrée pour générer)"
+            className="w-full h-24 p-3 bg-slate-600 text-white rounded border border-slate-500 focus:border-blue-400 focus:outline-none placeholder-gray-400 resize-none"
+          />
+          <p className="text-xs text-gray-400 mt-2">💡 Raccourci : Ctrl + Entrée</p>
         </div>
+
+        {isLoading && (
+          <div className="text-center">
+            <p className="text-blue-400">⏳ Génération en cours...</p>
+          </div>
+        )}
+
+        {generatedUrl && (
+          <div className="bg-slate-700 p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-semibold text-gray-200 mb-4">Image générée :</h2>
+            <div className="bg-slate-800 p-4 rounded flex justify-center mb-4">
+              <img
+                src={generatedUrl}
+                alt="Image générée"
+                className="max-w-full h-auto rounded"
+              />
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={generatedUrl}
+                readOnly
+                className="flex-1 p-3 bg-slate-600 text-white rounded border border-slate-500 text-sm"
+              />
+              <button
+                onClick={copyToClipboard}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-medium transition"
+              >
+                Copier
+              </button>
+            </div>
+          </div>
+        )}
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="text-center text-gray-400 text-sm">
+        <p>© 2025 Galactic Blast - Générez vos images avec style</p>
       </footer>
     </div>
   );
